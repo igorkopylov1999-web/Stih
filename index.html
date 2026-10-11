@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#4b1723">
+<title>Письмо для тебя</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Marck+Script&display=swap');
+:root{--wine:#4b1723;--rose:#a94f5e;--cream:#fff1dc;--gold:#e6bd82}
+*{box-sizing:border-box}html{min-height:100%;background:#32111b}body{margin:0;min-height:100svh;color:var(--cream);font-family:'Cormorant Garamond',Georgia,serif;overflow-x:hidden;background:radial-gradient(ellipse at 50% 28%,#8d3947 0,#541d2c 36%,#250d17 100%);}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.22;background-image:radial-gradient(#f8d9b0 .65px,transparent .8px);background-size:18px 18px;mask-image:linear-gradient(transparent,#000 25%,#000 75%,transparent);}
+.glow{position:fixed;width:280px;height:280px;border-radius:50%;filter:blur(75px);opacity:.23;pointer-events:none;animation:glow 8s ease-in-out infinite alternate}.glow.one{background:#ffb3a6;top:5%;left:-100px}.glow.two{background:#bd6b47;right:-120px;bottom:4%;animation-delay:-4s}
+main{position:relative;z-index:1;min-height:100svh;display:flex;align-items:center;justify-content:center;padding:30px 16px 42px}.scene{width:min(100%,540px);display:flex;flex-direction:column;align-items:center;text-align:center;}
+.eyebrow{font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:#edcda9;margin-bottom:12px;opacity:.9}.heading{font-family:'Marck Script',cursive;font-size:clamp(34px,8vw,49px);font-weight:400;line-height:1.05;margin:0 0 10px;text-shadow:0 2px 25px #f4b8a344}.intro{font-size:18px;line-height:1.45;color:#f5ddc9;margin:0 0 30px;max-width:310px}
+.envelope-button{position:relative;width:min(88vw,390px);height:255px;border:0;background:none;padding:0;cursor:pointer;perspective:1000px;-webkit-tap-highlight-color:transparent;filter:drop-shadow(0 22px 28px #17060c88);transition:transform .35s ease;touch-action:manipulation}.envelope-button:active{transform:scale(.98)}.envelope{position:absolute;inset:32px 0 0;height:205px;border-radius:5px 5px 12px 12px;background:linear-gradient(145deg,#fce5c8,#e8bd98 60%,#d9a07e);box-shadow:inset 0 0 0 1px #fff4d866;}
+.envelope:before{content:"";position:absolute;inset:0;background:linear-gradient(32deg,transparent 49.5%,#c98e70 50%,transparent 50.8%),linear-gradient(-32deg,transparent 49.5%,#c98e70 50%,transparent 50.8%);opacity:.72;border-radius:inherit}.flap{position:absolute;top:32px;left:0;width:100%;height:145px;background:linear-gradient(160deg,#fff0d9,#e9c3a0);clip-path:polygon(0 0,100% 0,50% 100%);transform-origin:top;z-index:5;filter:drop-shadow(0 3px 3px #7c3c3266);transition:transform .95s cubic-bezier(.2,.75,.2,1),z-index 0s .45s}.pocket{position:absolute;inset:auto 0 0;height:145px;background:linear-gradient(150deg,#f8d9b8,#dca17f);clip-path:polygon(0 0,50% 62%,100% 0,100% 100%,0 100%);z-index:4}.letter-peek{position:absolute;z-index:2;left:9%;width:82%;height:165px;bottom:23px;background:linear-gradient(135deg,#fff5df,#f1d5ae);border-radius:3px;box-shadow:0 2px 10px #57212a44;transition:transform 1s cubic-bezier(.18,.8,.2,1),bottom 1s;display:flex;align-items:flex-start;justify-content:center;padding-top:25px;color:#8c4145;font-size:25px}.seal{position:absolute;z-index:7;top:112px;left:50%;transform:translateX(-50%);width:57px;height:57px;border-radius:50% 48% 46% 50%;background:radial-gradient(circle at 32% 25%,#c85b64,#7c1e31 65%,#4a1222);border:2px solid #e5a2a0;box-shadow:0 4px 8px #581a2a77,inset 0 0 0 3px #a94a55;display:grid;place-items:center;font-size:28px;color:#f4c6aa;transition:opacity .35s,transform .5s}.envelope-button:focus-visible{outline:2px solid #f5d8b1;outline-offset:8px;border-radius:12px}
+.tap-hint{display:flex;align-items:center;gap:10px;margin-top:13px;font-size:17px;color:#f5d9bb;letter-spacing:.04em;animation:hint 2s ease-in-out infinite}.tap-icon{font-size:22px}.tiny-note{margin-top:10px;font-size:13px;color:#d9a9a0;letter-spacing:.06em}
+.scene.opening .flap{transform:rotateX(180deg);z-index:1}.scene.opening .seal{opacity:0;transform:translateX(-50%) scale(.3)}.scene.opening .letter-peek{transform:translateY(-115px) scale(1.03);bottom:65px}.scene.opening .tap-hint,.scene.opening .tiny-note{opacity:0;transition:opacity .25s}.scene.opening .envelope-button{animation:openLift 1.25s ease forwards}
+.letter-wrap{display:none;width:100%;margin-top:8px;opacity:0;transform:translateY(24px);transition:opacity .9s ease,transform .9s ease}.scene.revealed .letter-wrap{display:block}.scene.revealed .letter-wrap.show{opacity:1;transform:translateY(0)}.scene.revealed .envelope-button{height:0;opacity:0;pointer-events:none;margin:0;overflow:hidden;transition:height .7s .1s,opacity .5s}.scene.revealed .eyebrow,.scene.revealed .heading,.scene.revealed .intro{display:none}
+.paper{position:relative;text-align:center;color:#5b2930;padding:30px clamp(19px,6vw,34px) 28px;background:linear-gradient(125deg,#fff4df,#f6dfbd 45%,#ffefd5);border:1px solid #e8c79d;border-radius:3px;box-shadow:0 18px 55px #16060c66,inset 0 0 28px #d6a4772c;overflow:hidden}.paper:before,.paper:after{content:"✦";position:absolute;color:#c68b71;opacity:.45;font-size:24px}.paper:before{top:12px;left:15px}.paper:after{bottom:10px;right:15px}.paper-top{font-size:28px;color:#a54d56;margin:0 0 13px}.poem{font-size:clamp(16px,4.05vw,20px);line-height:1.33;font-weight:500;margin:0;white-space:normal}.stanza{margin:0 0 19px}.stanza:last-child{margin-bottom:8px}.divider{color:#bd7d73;letter-spacing:.3em;margin:0 auto 17px;font-size:15px}.signature{font-family:'Marck Script',cursive;font-size:25px;color:#984852;margin:22px 0 0}.replay{border:1px solid #d8a88e;border-radius:30px;background:#ffffff0a;color:#f8dfc5;font-family:inherit;font-size:16px;padding:10px 20px;margin-top:22px;cursor:pointer;transition:background .25s}.replay:hover{background:#ffffff15}
+.petal{position:fixed;top:-30px;z-index:0;pointer-events:none;color:#f0a6a2;opacity:0;animation:fall linear forwards;text-shadow:0 0 8px #ffb2a955}.spark{position:fixed;z-index:0;pointer-events:none;color:#ffdfab;animation:twinkle 3s ease-in-out infinite;opacity:.7}
+@keyframes fall{0%{transform:translate3d(0,-5vh,0) rotate(0deg);opacity:0}10%{opacity:.7}90%{opacity:.5}100%{transform:translate3d(var(--drift),110vh,0) rotate(440deg);opacity:0}}@keyframes hint{0%,100%{opacity:.65;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}@keyframes glow{from{transform:translate(0,0) scale(.9)}to{transform:translate(45px,35px) scale(1.18)}}@keyframes twinkle{0%,100%{transform:scale(.7);opacity:.2}50%{transform:scale(1.25);opacity:.9}}@keyframes openLift{0%{transform:translateY(0)}45%{transform:translateY(-8px)}100%{transform:translateY(-18px)}}
+@media(min-width:600px){main{padding-top:40px;padding-bottom:50px}.paper{padding-top:34px;padding-bottom:32px}.poem{font-size:20px}}@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<div class="glow one"></div><div class="glow two"></div>
+<main><section class="scene" id="scene" aria-label="Романтическое письмо">
+  <div class="eyebrow">несколько строк от сердца</div>
+  <h1 class="heading">Письмо для тебя</h1>
+  <p class="intro">Я оставил здесь немного нежности.<br>Она ждала именно тебя.</p>
+  <button class="envelope-button" id="openButton" aria-label="Открыть письмо" aria-expanded="false">
+    <div class="envelope"></div><div class="letter-peek">♡</div><div class="pocket"></div><div class="flap"></div><div class="seal">♡</div>
+  </button>
+  <div class="tap-hint"><span class="tap-icon">☝</span><span>Коснись конверта, чтобы открыть</span></div>
+  <div class="tiny-note">для самой нежной души</div>
+  <div class="letter-wrap" id="letterWrap" aria-live="polite">
+    <article class="paper">
+      <div class="paper-top">♡</div>
+      <div class="poem">
+        <p class="stanza">Ты — словно утро сияюще нежное,<br>Что светом касается сонных домов.<br>В сердце твоём что-то очень безбрежное,<br>Что не опишешь и тысячей слов.</p>
+        <div class="divider">— ♡ —</div>
+        <p class="stanza">Чистая, добрая, любовью согретая,<br>Ты, словно солнечный отблеск в окне;<br>Тайно желанная, сердцу заметная,<br>Будто дыхание близкое мне.</p>
+        <div class="divider">— ♡ —</div>
+        <p class="stanza">Нежная, милая, светом окутана,<br>Ты — словно роза в ночной темноте;<br>Сердцу распахнута, но не раскутана,<br>Тайна, которую хочется мне.</p>
+        <div class="divider">— ♡ —</div>
+        <p class="stanza">Ты не похожа на звёзды далёкие —<br>Ты согреваешь, когда темнота;<br>В сердце твоём есть глубины глубокие,<br>Где даже нежность звучит как мечта.</p>
+        <div class="divider">— ♡ —</div>
+        <p class="stanza">Ты — не случайная встреча, а главная<br>Среди обычных и будничных дней.<br>Чистая, светлая, добрая, славная —<br>Та, рядом с кем даже сердцу теплей.</p>
+      </div>
+      <div class="signature">С нежностью ♡</div>
+    </article>
+    <button class="replay" id="replayButton">Прочитать ещё раз ↺</button>
+  </div>
+</section></main>
+<script>
+(() => {
+ const scene=document.getElementById('scene');
+ const openButton=document.getElementById('openButton');
+ const letterWrap=document.getElementById('letterWrap');
+ const replayButton=document.getElementById('replayButton');
+ let opened=false;
+ function openLetter(){if(opened)return;opened=true;scene.classList.add('opening');openButton.setAttribute('aria-expanded','true');setTimeout(()=>{scene.classList.add('revealed');requestAnimationFrame(()=>letterWrap.classList.add('show'));window.scrollTo({top:0,behavior:'smooth'});},1050);}
+ function resetLetter(){opened=false;scene.classList.remove('opening','revealed');letterWrap.classList.remove('show');openButton.setAttribute('aria-expanded','false');window.scrollTo({top:0,behavior:'smooth'});}
+ openButton.addEventListener('click',openLetter);replayButton.addEventListener('click',resetLetter);
+ const symbols=['✦','♡','✧','❀'];
+ function makePetal(){if(document.hidden)return;const el=document.createElement('span');el.className='petal';el.textContent=symbols[Math.floor(Math.random()*symbols.length)];el.style.left=Math.random()*100+'vw';el.style.fontSize=(10+Math.random()*15)+'px';el.style.setProperty('--drift',(Math.random()*180-90)+'px');el.style.animationDuration=(8+Math.random()*9)+'s';document.body.appendChild(el);setTimeout(()=>el.remove(),18000);}
+ for(let i=0;i<10;i++)setTimeout(makePetal,i*500);setInterval(makePetal,1150);
+ for(let i=0;i<12;i++){const s=document.createElement('span');s.className='spark';s.textContent='✧';s.style.left=(5+Math.random()*90)+'%';s.style.top=(5+Math.random()*90)+'%';s.style.fontSize=(9+Math.random()*12)+'px';s.style.animationDelay=(-Math.random()*3)+'s';document.body.appendChild(s);}
+})();
+</script>
+</body>
+</html>
